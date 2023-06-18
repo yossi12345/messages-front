@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { useEffect, useState } from 'react';
+import './App.scss';
+import { handleCreateMessage, handleSetMessages } from './functions';
 
 function App() {
+  const [messages,setMessages]=useState([])
+  useEffect(()=>{
+    handleSetMessages(setMessages)
+  },[])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      <form onSubmit={(event)=>{
+        event.preventDefault()
+        handleCreateMessage(event.target)
+      }}>
+        <textarea name="message"/>
+        <button type='submit'>create message</button>
+      </form>
+      <div>
+        {messages.map(message=>(
+          <h4 key={Math.random()}>{message.content}</h4>
+        ))}
+      </div>
     </div>
   );
 }
-
 export default App;
